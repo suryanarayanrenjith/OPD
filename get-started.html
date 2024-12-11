@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Started - Healthcare Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: white;
+            color: #333; /* Dark gray text color for better readability */
+            overflow-x: hidden;
+        }
+
+        h1, h2 {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .heading {
+            margin-bottom: 50px;
+        }
+
+        .heading h2 {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+            color: #edafb8; /* Light pink for headings */
+        }
+
+        .heading p {
+            font-size: 1.1rem;
+            color: #555; /* Darker gray for better readability */
+            margin-bottom: 40px;
+        }
+
+        /* Steps Layout */
+        .steps {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 25px;
+            width: 300px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .step:hover {
+            transform: translateY(-10px);
+        }
+
+        .step-icon {
+            font-size: 3rem;
+            color: #edafb8; /* Light pink for icons */
+            margin-bottom: 20px;
+            animation: bounce 2s infinite ease-in-out;
+        }
+
+        .step h3 {
+            font-size: 1.7rem;
+            margin-bottom: 15px;
+            color: #edafb8; /* Light pink for step headers */
+        }
+
+        .step p {
+            font-size: 1.1rem;
+            color: #555; /* Darker gray text for steps */
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* CTA Button */
+        .cta-button {
+            padding: 15px 35px;
+            background: linear-gradient(135deg, #edafb8, #ffb8c1); /* Updated button gradient */
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.3s ease, background 0.3s ease;
+            animation: fadeIn 2.5s ease-out;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, #ffb8c1, #edafb8); /* Button hover effect */
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .steps {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .step {
+                width: 90%;
+                margin-bottom: 20px;
+            }
+
+            .cta-button {
+                font-size: 1.1rem;
+                padding: 15px 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="heading">
+            <h2>Get Started with Your Healthcare Journey</h2>
+            <p>We’re here to help you take control of your healthcare with advanced features, seamless scheduling, and accurate predictions.</p>
+        </div>
+
+        <!-- Steps Section -->
+        <div class="steps">
+            <div class="step">
+                <div class="step-icon">&#x1F551;</div>
+                <h3>OPD Wait Time Prediction</h3>
+                <p>Our advanced queuing model predicts and minimizes your wait time at OPDs, ensuring a smooth and efficient visit.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-icon">&#x1F4B8;</div>
+                <h3>Real-Time Price Estimation</h3>
+                <p>Get accurate cost estimates for treatments and procedures before booking. Plan your healthcare expenses with confidence.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-icon">&#x1F4BB;</div>
+                <h3>Book Appointments</h3>
+                <p>Schedule appointments with top-rated doctors. Choose from a wide network of highly qualified specialists at your convenience.</p>
+            </div>
+        </div>
+
+        <button class="cta-button" onclick="window.location.href='/Sign-in'">Explore Now</button>
+    </div>
+
+</body>
+
+</html>

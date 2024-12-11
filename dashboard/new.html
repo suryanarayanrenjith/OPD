@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nearest Hospital Finder</title>
+  <style>
+   /* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: white; /* Main background color */
+    color: #333; /* Default text color */
+}
+
+/* Search Bar */
+.search-bar {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    background-color: #fff; /* White background */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#search-input {
+    width: 80%;
+    height: 40px;
+    font-size: 24px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
+}
+
+#search-btn {
+    position: absolute;
+    width: 15%;
+    height: 60px;
+    margin-left: 20px;
+    font-size: 20px;
+    background-color: #edafb8; /* Dusty pink background */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#search-btn:hover {
+    background-color: #8A5B6C; /* Darker dusty pink on hover */
+}
+
+/* Map Container */
+#map-container {
+    width: 100%;
+    height: 600px;
+    margin: 20px auto;
+    border: 1px solid #ddd;
+    padding: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+}
+
+#map {
+    width: 100%;
+    height: 500px;
+}
+
+/* Hospital List */
+#hospital-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Hospital Card */
+.hospital-card {
+    width: calc(33.33% - 50px);
+    background-color: #fff; /* White background */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hospital-card h3 {
+    margin-top: 0;
+    font-size: 20px;
+    color: #5A3D5C; /* Dusty pink for headings */
+}
+
+.hospital-card p {
+    margin: 10px 0;
+    color: #555;
+}
+
+.hospital-card .rating {
+    font-size: 16px;
+    color: #ff9800; /* Yellow color for ratings */
+}
+
+.hospital-card .address {
+    font-size: 14px;
+    color: #777;
+}
+
+/* Hover Effects */
+.hospital-card:hover {
+    transform: translateY(-10px); /* Moves the card upwards */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Stronger shadow for hover effect */
+}
+
+/* Button Hover Effect */
+button:hover {
+    background-color: #ED9797; /* Darker dusty pink on hover */
+}
+
+
+  </style>
+</head>
+<body>
+  <div class="search-bar">
+    <input id="search-input" type="text" placeholder="Search for hospitals">
+    <button id="search-btn">Search</button>
+  </div>
+  <div id="map-container">
+    <div id="map"></div>
+    <div id="hospital-list"></div>
+  </div>
+
+  <script>
+    // Get the user's current location
+    navigator.geolocation.getCurrentPosition(position => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+
+        // Initialize the Google Maps API
+        const map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat, lng },
+            zoom: 12
+        });
+
+        // Create a marker for the user's location
+        const userMarker = new google.maps.Marker({
+            position: { lat, lng },
+            map: map,
+            title: 'Your location'
+        });
+
+        // Search for hospitals near the user's location
+        const searchInput = document.getElementById('search-input');
+        const searchBtn = document.getElementById('search-btn');
+
+        searchBtn.addEventListener('click', () => {
+            const searchQuery = searchInput.value.trim();
+            if (searchQuery) {
+                // Use the Google Places API to search for hospitals
+                const service = new google.maps.places.PlacesService(map);
+                service.nearbySearch({
+                    location: { lat, lng },
+                    radius: 5000,
+                    type: ['hospital']
+                }, (results, status) => {
+                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        // Clear the previous results
+                        const hospitalList = document.getElementById('hospital-list');
+                        hospitalList.innerHTML = '';
+
+                        // Create cards for the hospitals
+                        results.forEach(result => {
+                            const hospitalCard = document.createElement('div');
+                            hospitalCard.classList.add('hospital-card');
+
+                            // Add the hospital name
+                            const name = document.createElement('h3');
+                            name.textContent = result.name;
+                            hospitalCard.appendChild(name);
+
+                            // Add the hospital rating
+                            const rating = document.createElement('p');
+                            if (result.rating) {
+                                rating.textContent = `Rating: ${result.rating}`;
+                                rating.classList.add('rating');
+                            } else {
+                                rating.textContent = 'No rating available';
+                            }
+                            hospitalCard.appendChild(rating);
+
+                            // Add the hospital address
+                            const address = document.createElement('p');
+                            address.textContent = result.vicinity || 'Address not available';
+                            address.classList.add('address');
+                            hospitalCard.appendChild(address);
+
+                            // Add a click event to redirect to hospital-details.html with additional parameters
+                            hospitalCard.addEventListener('click', () => {
+                                // Pass the hospital's name, rating, and place_id in the URL
+                                window.location.href = `hospital-details.html?id=${result.place_id}&name=${encodeURIComponent(result.name)}&rating=${result.rating || 'N/A'}`;
+                            });
+
+                            // Append the card to the list
+                            hospitalList.appendChild(hospitalCard);
+
+                            // Create markers for the hospitals
+                            const hospitalMarker = new google.maps.Marker({
+                                position: result.geometry.location,
+                                map: map,
+                                title: result.name
+                            });
+                        });
+                    }
+                });
+            }
+        });
+    });
+
+    // Load the Google Maps API
+    const script = document.createElement('script');
+    script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyB7eZcIai2wUBOLcScemMvdyvj-Ipbh668&libraries=places';
+    document.body.appendChild(script);
+</script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white; /* White background for the page */
+            color: #333; /* Dark text for readability */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Keyframes for the hover up animation */
+        @keyframes hoverUp {
+            0% {
+                transform: translateY(50px); /* Start 50px below */
+                opacity: 0; /* Start with 0 opacity */
+            }
+            60% {
+                transform: translateY(-10px); /* Move slightly up */
+                opacity: 1; /* Full opacity */
+            }
+            100% {
+                transform: translateY(0); /* Final position */
+            }
+        }
+
+        .signin-container {
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background for the form */
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            backdrop-filter: blur(10px); /* Adds blur effect to the background */
+            animation: hoverUp 0.6s ease-out; /* Apply animation */
+        }
+
+        .signin-container h2 {
+            color: #edafb8; /* Light pink for the heading */
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .signin-container input[type="email"],
+        .signin-container input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0 20px 0;
+            display: inline-block;
+            border: 1px solid #ddd;
+            background: #f9f9f9; /* Light gray background for inputs */
+            color: #333;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .signin-container input[type="email"]:focus,
+        .signin-container input[type="password"]:focus {
+            border-color: #edafb8; /* Focused border color with the secondary theme */
+            outline: none;
+            box-shadow: 0 0 8px rgba(237, 175, 184, 0.7); /* Soft shadow with the theme color */
+        }
+
+        .signin-container input[type="submit"] {
+            background-color: #edafb8; /* Light pink button */
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .signin-container input[type="submit"]:hover {
+            background-color: #d88c99; /* Slightly darker pink on hover */
+        }
+
+        .signin-container a {
+            color: #edafb8; /* Link color matches the secondary theme */
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .signin-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="signin-container">
+        <h2>Sign In to Your Account</h2>
+        <form action="signin.php" method="post">
+            <input type="email" name="gmail" placeholder="Email Address" required>
+            <input type="password" name="pass" placeholder="Password" required>
+            <input type="submit" value="Sign In">
+        </form>
+        <a href="/Sign-up/signup.html">Don't have an account? Sign up here</a>
+    </div>
+</body>
+</html>

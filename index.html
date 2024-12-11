@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next-Gen Healthcare Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: white; /* Updated background gradient */
+            color: #333; /* Text color changed to dark gray for better contrast */
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            padding: 30px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.8); /* Lightened background for container */
+            max-width: 90%;
+            width: 500px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for lighter theme */
+            animation: slideUp 1s ease-out;
+        }
+
+        .container h1 {
+            font-size: 3.5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #edafb8; /* Heading color updated to pinkish tone */
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .container p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: rgba(51, 51, 51, 0.8); /* Dark gray text for better readability */
+            animation: fadeIn 2s ease-out;
+        }
+
+        .hero-btn {
+            padding: 15px 35px;
+            background: linear-gradient(135deg, #edafb8, #ffb8c1); /* Button gradient in pinkish tones */
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.3s ease, background 0.3s ease;
+            animation: fadeIn 2.5s ease-out;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(135deg, #ffb8c1, #edafb8); /* Button hover color in reverse gradient */
+        }
+
+        .hero-btn:active {
+            transform: translateY(2px);
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            0% {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-shape {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background: rgba(237, 175, 184, 0.2); /* Floating shapes in a lighter pink */
+            border-radius: 50%;
+            animation: float 12s infinite ease-in-out;
+            opacity: 0.6;
+        }
+
+        .floating-shape:nth-child(1) {
+            top: 15%;
+            left: 10%;
+            animation-duration: 14s;
+        }
+
+        .floating-shape:nth-child(2) {
+            top: 50%;
+            left: 70%;
+            animation-duration: 18s;
+        }
+
+        .floating-shape:nth-child(3) {
+            top: 80%;
+            left: 30%;
+            animation-duration: 20s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(30deg);
+            }
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            .container h1 {
+                font-size: 2.5em;
+            }
+
+            .container p {
+                font-size: 1em;
+            }
+
+            .hero-btn {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="floating-shapes">
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+    </div>
+
+    <div class="container">
+        <h1>Welcome to the Future of Healthcare</h1>
+        <p>Your health, our priority. Experience seamless and modern healthcare services designed for the digital age.</p>
+        <button class="hero-btn" onclick="window.location.href='get-started.html'">Get Started</button>
+    </div>
+
+</body>
+
+</html>

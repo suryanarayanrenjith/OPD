@@ -1,0 +1,70 @@
+<html>
+<head>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 100px;
+        }
+        .checkmark {
+            width: 100px;
+            height: 100px;
+            background-color: #1a73e8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .checkmark i {
+            color: #ffffff;
+            font-size: 50px;
+        }
+        .amount {
+            font-size: 36px;
+            margin: 20px 0;
+        }
+        .details {
+            font-size: 18px;
+            color: #b0b0b0;
+        }
+        .details .date-time {
+            margin-top: 20px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="checkmark">
+        <i class="fas fa-check"></i>
+    </div>
+    <div class="amount" id="amount">₹50.00</div>
+    <div class="details">
+        <div>Paid to MediSnap</div>
+        <div class="date-time" id="date-time"></div>
+    </div>
+
+    <script>
+        // Function to get the value of a query parameter by name
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Get the 'cost' parameter from the URL
+        const cost = getQueryParam('cost');
+
+        // Display the amount, default to ₹0.00 if no 'cost' parameter is found
+        const amountElement = document.getElementById('amount');
+        amountElement.innerText = cost ? `₹${parseFloat(cost).toFixed(2)}` : '₹50.00';
+
+        // Display the current date and time
+        const dateTimeElement = document.getElementById('date-time');
+        const now = new Date();
+        const formattedDateTime = now.toLocaleDateString() + " " + now.toLocaleTimeString();
+        dateTimeElement.innerText = formattedDateTime;
+    </script>
+</body>
+</html>

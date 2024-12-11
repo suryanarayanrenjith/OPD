@@ -1,0 +1,113 @@
+<form action="/paid/index.html" method="POST" id="paymentForm" style="font-family: Arial, sans-serif; background-color: white; color: #333; padding: 20px; max-width: 600px; margin: 0 auto; border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+    <input type="hidden" name="patientName" id="patientNameInput">
+    <input type="hidden" name="patientAge" id="patientAgeInput">
+    <input type="hidden" name="token" id="tokenInput">
+    <input type="hidden" name="amount" id="amountInput">
+
+    <script>
+        // Function to generate random cost between ₹50 and ₹60
+        function generateRandomCost() {
+            const cost = (Math.random() * (60 - 50) + 50).toFixed(2); // Random cost between ₹50 and ₹60
+            return cost;
+        }
+
+        // Function to fetch token from URL parameters (if available)
+        function getTokenFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('token');
+        }
+
+        // Function to populate amount and patient information from localStorage
+        function populateAmountAndProfile() {
+            const cost = generateRandomCost(); // Generate random cost
+            
+            // Get patient details from localStorage
+            const patientName = localStorage.getItem('patient-name') || 'Unknown';
+            const patientAge = localStorage.getItem('patient-age') || 'N/A';
+            
+            // Try fetching token from localStorage, if not found, fallback to URL parameter
+            let token = localStorage.getItem('token');
+            if (!token) {
+                token = getTokenFromUrl() || 'No token available'; // Fallback to URL token if not in localStorage
+            }
+
+            // Update the DOM with values
+            document.getElementById("amountToPay").textContent = `₹${cost}`;
+            document.getElementById("patientName").textContent = patientName;
+            document.getElementById("patientAge").textContent = patientAge;
+            document.getElementById("patientToken").textContent = token;
+
+            // Set hidden form values
+            document.getElementById("patientNameInput").value = patientName;
+            document.getElementById("patientAgeInput").value = patientAge;
+            document.getElementById("tokenInput").value = token;
+            document.getElementById("amountInput").value = cost;
+
+            // Modify the form action to include the 'cost' query parameter
+            const formActionUrl = `/paid/index.html?cost=${cost}`;
+            document.getElementById("paymentForm").action = formActionUrl; // Dynamically set action URL
+        }
+
+        // Call the function on window load
+        window.onload = populateAmountAndProfile;
+
+        // Function to change the form action to /paid before submission
+        function changeActionAndSubmit() {
+            document.getElementById("paymentForm").submit(); // Submit the form
+        }
+
+        // Add event listeners for each payment button
+        document.querySelectorAll('.pay-button').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default form submission
+                changeActionAndSubmit(); // Submit the form
+            });
+        });
+    </script>    
+
+    <!-- Payment Method Buttons -->
+    <div class="payment-methods" style="text-align: center; margin-bottom: 30px;">
+        <h3 style="color: #D8A7B4;">Select Payment Method</h3>
+        <div class="payment-options" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+            <!-- Credit Card -->
+            <div class="payment-option" style="border: 1px solid #eee; padding: 15px; border-radius: 8px; background-color: #f9f9f9;">
+                <h4 style="color: #D8A7B4;">Credit Card</h4>
+                <label for="creditCardNumber" style="color: #666;">Card Number:</label>
+                <input type="text" id="creditCardNumber" placeholder="1234 5678 9012 3456" style="width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: 1px solid #ddd;">
+                <button class="pay-button" type="submit" name="paymentMethod" value="creditCard" style="background-color: #D8A7B4; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%;">Pay with Credit Card</button>
+            </div>
+
+            <!-- Bitcoin -->
+            <div class="payment-option" style="border: 1px solid #eee; padding: 15px; border-radius: 8px; background-color: #f9f9f9;">
+                <h4 style="color: #D8A7B4;">Bitcoin</h4>
+                <label for="bitcoinAddress" style="color: #666;">Bitcoin Address:</label>
+                <input type="text" id="bitcoinAddress" placeholder="1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa" style="width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: 1px solid #ddd;">
+                <button class="pay-button" type="submit" name="paymentMethod" value="bitcoin" style="background-color: #D8A7B4; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%;">Pay with Bitcoin</button>
+            </div>
+
+            <!-- Monero -->
+            <div class="payment-option" style="border: 1px solid #eee; padding: 15px; border-radius: 8px; background-color: #f9f9f9;">
+                <h4 style="color: #D8A7B4;">Monero</h4>
+                <label for="moneroAddress" style="color: #666;">Monero Address:</label>
+                <input type="text" id="moneroAddress" placeholder="44AFFq5kSiGBoZ..." style="width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: 1px solid #ddd;">
+                <button class="pay-button" type="submit" name="paymentMethod" value="monero" style="background-color: #D8A7B4; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%;">Pay with Monero</button>
+            </div>
+
+            <!-- YoMo M Coins -->
+            <div class="payment-option" style="border: 1px solid #eee; padding: 15px; border-radius: 8px; background-color: #f9f9f9;">
+                <h4 style="color: #D8A7B4;">YoMo M Coins</h4>
+                <label for="yomoCoins" style="color: #666;">YoMo M Coin Wallet:</label>
+                <input type="text" id="yomoCoins" placeholder="Your YoMo M Wallet ID" style="width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: 1px solid #ddd;">
+                <button class="pay-button" type="submit" name="paymentMethod" value="yomoCoins" style="background-color: #D8A7B4; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%;">Pay with YoMo M Coins</button>
+            </div>
+
+            <!-- UPI -->
+            <div class="payment-option" style="border: 1px solid #eee; padding: 15px; border-radius: 8px; background-color: #f9f9f9;">
+                <h4 style="color: #D8A7B4;">UPI</h4>
+                <label for="upiID" style="color: #666;">UPI ID:</label>
+                <input type="text" id="upiID" placeholder="yourname@bank" style="width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: 1px solid #ddd;">
+                <button class="pay-button" type="submit" name="paymentMethod" value="upi" style="background-color: #D8A7B4; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%;">Pay with UPI</button>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white; /* White background for the page */
+            color: #333; /* Dark text for readability */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .signup-container {
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background for the form */
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            backdrop-filter: blur(10px); /* Adds blur effect to the background */
+        }
+
+        .signup-container h2 {
+            color: #edafb8; /* Light pink for the heading */
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .signup-container input[type="text"],
+        .signup-container input[type="email"],
+        .signup-container input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0 20px 0;
+            display: inline-block;
+            border: 1px solid #ddd;
+            background: #f9f9f9; /* Light gray background for inputs */
+            color: #333;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .signup-container input[type="text"]:focus,
+        .signup-container input[type="email"]:focus,
+        .signup-container input[type="password"]:focus {
+            border-color: #edafb8; /* Focused border color with the secondary theme */
+            outline: none;
+            box-shadow: 0 0 8px rgba(237, 175, 184, 0.7); /* Soft shadow with the theme color */
+        }
+
+        .signup-container input[type="submit"] {
+            background-color: #edafb8; /* Light pink button */
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .signup-container input[type="submit"]:hover {
+            background-color: #d88c99; /* Slightly darker pink on hover */
+        }
+
+        .signup-container a {
+            color: #edafb8; /* Link color matches the secondary theme */
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .signup-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <h2>Create Your Account</h2>
+        <form action="signup.php" method="post">
+            <input type="text" name="firstname" placeholder="First Name" required>
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="submit" value="Sign Up">
+        </form>
+    </div>
+</body>
+</html>

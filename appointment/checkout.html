@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Healthcare Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1c1c1c, #333);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            padding: 50px;
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .container h2 {
+            font-size: 3em;
+            margin-bottom: 30px;
+            animation: fadeInDown 1s ease-in-out;
+        }
+
+        .section {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .section h3 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .section p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .estimate-button, .pay-button {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #00d4ff, #0056b3);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.3s ease, background 0.3s ease;
+            display: inline-block;
+        }
+
+        .estimate-button:hover, .pay-button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #0056b3, #00d4ff);
+        }
+
+        .estimate-result {
+            font-size: 2em;
+            margin-top: 20px;
+            color: #00ff99;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        #payNow {
+            display: none; /* Initially hidden */
+        }
+
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Checkout</h2>
+
+        <div class="section">
+            <h3>Patient Information</h3>
+            <p id="patientInfo">Name: JOHN DOE, Age: 24, Condition: Fever</p>
+        </div>
+
+        <div class="section">
+            <h3>Estimated Cost</h3>
+            <p>The estimated cost will be based on the patient's condition and age.</p>
+            <button class="estimate-button" onclick="estimateCost()">Estimate Cost</button>
+            <div id="estimateResult" class="estimate-result"></div>
+            <button id="payNow" class="pay-button" onclick="redirectToPayNow()">Pay Now</button>
+        </div>
+    </div>
+
+    <script>
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function estimateCost() {
+            // Retrieve patient data from the URL parameters
+            const params = new URLSearchParams(window.location.search);
+            const age = parseInt(params.get("age")) || 24;
+            const condition = params.get("healthConditions") || "Fever";
+
+            // Base cost in currency units
+            let baseCost = 100;
+
+            // Cost multipliers based on condition
+            const conditionMultipliers = {
+            "Fever": 1.2,
+            "Critical": 2.5,
+            "Moderate": 1.8,
+            "Mild": 1.1,
+            "Diabetes": 1.5,
+            "Hypertension": 1.3,
+            "COVID-19": 2.0,
+            "Asthma": 1.4,
+            "Pneumonia": 2.2,
+            "Heart Attack": 3.0,
+            "Stroke": 3.5,
+            "Cancer": 3.2,
+            "Allergy": 1.2,
+            "Flu": 1.3,
+            "Bronchitis": 1.7,
+            "Chronic Pain": 1.6,
+            "Kidney Disease": 2.3,
+            "Liver Disease": 2.1,
+            "Tuberculosis": 2.4,
+            "Anemia": 1.5,
+            "Epilepsy": 1.8,
+            "HIV/AIDS": 2.8,
+            "Malaria": 2.0,
+            "Arthritis": 1.4,
+            "Migraine": 1.3,
+            "Dementia": 2.7,
+            "Alzheimer's": 2.9,
+            "Obesity": 1.6,
+            "Osteoporosis": 1.5,
+            "Depression": 1.7,
+            "Schizophrenia": 2.6,
+            "Bipolar Disorder": 2.3
+            };
+
+            // Adjust cost based on health condition
+            const conditionMultiplier = conditionMultipliers[condition] || 1.0;
+            baseCost *= conditionMultiplier;
+
+            if (age >= 60) {
+                baseCost *= 1.5;
+            } else if (age < 18) {
+                baseCost *= 0.9;
+            }
+
+            const randomVariation = getRandomInt(-50, 50);
+            baseCost += randomVariation;
+
+            const estimateResultDiv = document.getElementById("estimateResult");
+            estimateResultDiv.textContent = `Estimated Cost: ₹${baseCost.toFixed(2)}`;
+
+            document.getElementById("payNow").dataset.cost = baseCost.toFixed(2);
+
+            document.getElementById("payNow").style.display = 'inline-block';
+        }
+
+        function populatePatientInfo() {
+            const params = new URLSearchParams(window.location.search);
+            const name = params.get("patientName") || "JOHN DOE";
+            const age = params.get("age") || "24";
+            const condition = params.get("healthConditions") || "Fever";
+
+            document.getElementById("patientInfo").textContent = `Name: ${name}, Age: ${age}, Condition: ${condition}`;
+        }
+
+        function redirectToPayNow() {
+            const cost = document.getElementById("payNow").dataset.cost;
+            window.location.href = `/paynow/pay-now.html?cost=${cost}`;
+        }
+
+        window.onload = populatePatientInfo;
+    </script>
+</body>
+
+</html>

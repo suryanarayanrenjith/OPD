@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment - Healthcare Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1c1c1c, #333);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            padding: 50px;
+            max-width: 800px;
+            margin: auto;
+            text-align: left;
+        }
+
+        .container h2 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease-in-out;
+        }
+
+        .hospital-details {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 1.5s ease-in-out;
+        }
+
+        .hospital-details h3 {
+            font-size: 2em;
+            color: #00d4ff;
+            margin-bottom: 10px;
+        }
+
+        .hospital-details p {
+            font-size: 1.2em;
+            color: #ccc;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        .form-group textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        .submit-button {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #00d4ff, #0056b3);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .submit-button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #0056b3, #00d4ff);
+        }
+
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Book Your Appointment</h2>
+
+        <div class="hospital-details" id="hospitalDetails">
+            <h3 id="hospitalName">Hospital Name</h3>
+            <p id="hospitalLocation">Location: Unknown</p>
+        </div>
+
+        <form id="appointmentForm" action="appointment.php" method="POST">
+            <div class="form-group">
+                <label for="patientName">Patient Name</label>
+                <input type="text" id="patientName" name="patientName" placeholder="Enter your full name" required>
+            </div>
+        
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" placeholder="Enter your age" required>
+            </div>
+        
+            <div class="form-group">
+                <label for="healthConditions">Health Conditions</label>
+                <textarea id="healthConditions" name="healthConditions" placeholder="Describe any existing health conditions"></textarea>
+            </div>
+        
+            <div class="form-group">
+                <label for="contact">Contact Information</label>
+                <input type="text" id="contact" name="contact" placeholder="Enter your contact details" required>
+            </div>
+
+            <!-- Hidden field to store the token -->
+            <input type="hidden" id="token" name="token">
+
+            <button type="submit" class="submit-button">Submit Appointment</button>
+        </form>        
+
+        <script>
+            function getUrlParams() {
+                const params = new URLSearchParams(window.location.search);
+                return {
+                    hospitalName: decodeURIComponent(params.get('hospitalName')) || 'Unknown Hospital',
+                    hospitalLocation: decodeURIComponent(params.get('hospitalLocation')) || 'Unknown Location'
+                };
+            }
+        
+            function updateHospitalDetails() {
+                const params = getUrlParams();
+                document.getElementById('hospitalName').textContent = params.hospitalName;
+                document.getElementById('hospitalLocation').textContent = `Location: ${params.hospitalLocation}`;
+            }
+
+            function generateToken() {
+                return 'TOKEN-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+            }
+
+            document.getElementById('appointmentForm').addEventListener('submit', function(event) {
+                document.getElementById('token').value = generateToken();
+            });
+
+            window.onload = updateHospitalDetails;
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Central Laboratory Request for Investigations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4c2c2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 800px;
+            margin: 20px auto;
+            background-color: #f4c2c2;
+            padding: 20px;
+            border: 1px solid #000;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header img {
+            height: 50px;
+        }
+
+        .header div {
+            text-align: right;
+        }
+
+        .header div h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .header div p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .section {
+            margin-top: 20px;
+        }
+
+        .section h2 {
+            font-size: 18px;
+            margin: 0;
+            border-bottom: 1px solid #000;
+            padding-bottom: 5px;
+        }
+
+        .section table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .section table,
+        .section th,
+        .section td {
+            border: 1px solid #000;
+        }
+
+        .section th,
+        .section td {
+            padding: 5px;
+            text-align: left;
+        }
+
+        .footer {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .footer div {
+            width: 48%;
+        }
+
+        .footer div p {
+            margin: 5px 0;
+        }
+
+        .signature {
+            margin-top: 20px;
+        }
+
+        .signature label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .signature input {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        #signaturePreview {
+            display: none;
+            margin-top: 10px;
+            max-width: 100%;
+            max-height: 100px;
+        }
+
+        .checkout-button {
+            display: block;
+            width: 95%;
+            padding: 15px;
+            background: linear-gradient(135deg, #00d4ff, #0056b3);
+            color: #fff;
+            text-align: center;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+
+        .checkout-button:hover {
+            background: linear-gradient(135deg, #0056b3, #00d4ff);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <img alt="Reva University Hospital Logo" height="50" src="/assets/Reva.jpg" width="100" />
+            <div>
+                <h1>REVA University Hospital</h1>
+                <p>Rukmini Knowledge Park, Bangalore, Karnataka, India, 560 064</p>
+            </div>
+        </div>
+        <div class="section">
+            <h2>General OPD Slip</h2>
+            <table>
+                <tr>
+                    <th>Patient Information</th>
+                    <th>Specimen Identification Details</th>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            Name:
+                            <strong id="patientName">
+                                JOHN DOE
+                            </strong>
+                        </p>
+                        <p>
+                            Address:
+                            <strong>
+                                Marathalli, Bangalore, India
+                            </strong>
+                        </p>
+                        <p>
+                            Age:
+                            <strong id="age">
+                                24
+                            </strong>
+                            Years
+                        </p>
+                        <p>
+                            Sex:
+                            <strong>
+                                M
+                            </strong>
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            IP/OP No.:
+                            <strong>
+                                314318
+                            </strong>
+                        </p>
+                        <p>
+                            Bill No.:
+                            <strong>
+                                234
+                            </strong>
+                        </p>
+                        <p>
+                            Sample Drawn Date:
+                            <strong id="sampleDrawnDate">
+                                25/8/2021
+                            </strong>
+                        </p>
+                        <p>
+                            Sample Drawn Time:
+                            <strong id="sampleDrawnTime">
+                                8:00 AM
+                            </strong>
+                        </p>
+                        <p>
+                            Sample Sent By:
+                            <strong>
+                                MIC
+                            </strong>
+                        </p>
+                        <p>
+                            Signature of person sending:
+                            <strong>
+                                ...
+                            </strong>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="section">
+            <h2>Patient Clinical History</h2>
+            <p>
+                Health Conditions:
+                <strong id="healthConditions">
+                    Fever
+                </strong>
+            </p>
+        </div>
+
+        <div class="signature">
+            <label for="esign">
+                E-Signature:
+            </label>
+            <input id="esign" type="file" accept="image/*" onchange="previewSignature()" />
+            <img id="signaturePreview" alt="Signature Preview" />
+        </div>
+
+        <a id="checkoutLink" href="#" class="checkout-button">Proceed to Checkout</a>
+    </div>
+
+    <script>
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                patientName: params.get('patientName') || 'JOHN DOE',
+                age: params.get('age') || '24',
+                healthConditions: params.get('healthConditions') || 'Fever',
+            };
+        }
+
+        function updateOPDSlip() {
+            const params = getUrlParams();
+            document.getElementById('patientName').textContent = params.patientName;
+            document.getElementById('age').textContent = params.age;
+            document.getElementById('healthConditions').textContent = params.healthConditions;
+
+            // Update checkout link with parameters
+            const checkoutLink = document.getElementById('checkoutLink');
+            checkoutLink.href = `checkout.html?patientName=${encodeURIComponent(params.patientName)}&age=${encodeURIComponent(params.age)}&healthConditions=${encodeURIComponent(params.healthConditions)}`;
+        }
+
+        function previewSignature() {
+            const fileInput = document.getElementById('esign');
+            const preview = document.getElementById('signaturePreview');
+            const file = fileInput.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+
+        window.onload = function () {
+            updateOPDSlip();
+        };
+    </script>
+</body>
+
+</html>

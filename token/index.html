@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token QR Code</title>
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 50px;
+}
+
+#qr-code-container {
+    margin: 0 auto;  /* Horizontally center the container */
+    display: flex;
+    justify-content: center;  /* Centers QR code horizontally within the container */
+    align-items: center;  /* Centers QR code vertically within the container */
+    height: 100vh;  /* Takes the full height of the viewport */
+}
+
+#qr-code {
+    margin: 20px auto;
+}
+
+    </style>
+    <!-- Include the QRCode.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+
+    <h2>Your Token QR Code</h2>
+<div id="qr-code-container">
+    <div id="qr-code"></div>
+</div>
+
+<div id="token-link-container">
+    <p id="token-link-text"></p>
+</div>
+
+<script>
+    const token = localStorage.getItem('token');
+
+    if (token) {
+        const url = `/paynow/pay-now.html?token=${token}`;
+        
+        new QRCode(document.getElementById("qr-code"), {
+            text: url,  // Set the text to be the URL with the token parameter
+            width: 256,  // Width of the QR code
+            height: 256,  // Height of the QR code
+            colorDark: "#000000",  // Dark color for QR code squares
+            colorLight: "#ffffff",  // Light color for background
+            correctLevel: QRCode.CorrectLevel.H  // High error correction
+        });
+
+        const tokenLinkContainer = document.getElementById("token-link-text");
+        tokenLinkContainer.innerHTML = `<a href="${url}" target="_blank" style="color: #1e90ff; text-decoration: none;">Click here to use your token</a>`;
+    } else {
+        document.getElementById('qr-code').innerText = 'No token found in localStorage.';
+    }
+</script>    
+
+</body>
+</html>
